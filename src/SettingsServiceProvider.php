@@ -35,7 +35,10 @@ class SettingServiceProvider extends ServiceProvider
 	private function publishFiles()
 	{
 		$this->publishes([
-			__DIR__.'/../database/migrations/create_settings_table.php' => database_path('migrations') . '/create_settings_table.php'
+			__DIR__.'/../database/migrations' => database_path('migrations')
 		], 'migrations');
+		$this->publishes([
+			__DIR__.'/../resources/assets' => resource_path('assets')
+		], 'assets');
 	}
 }
