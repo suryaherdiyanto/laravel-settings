@@ -1,6 +1,6 @@
 <?php
 
-namespace Settings;
+namespace Setting;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +15,10 @@ class SettingServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->publishFiles();
+
+		$this->app->singleton('settings', function($app){
+			return new SerttingService();
+		});
 	}
 
 	/**
