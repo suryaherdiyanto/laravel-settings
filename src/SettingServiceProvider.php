@@ -4,6 +4,8 @@ namespace Setting;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Setting\Repositories\SettingRepository;
+use Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 
 class SettingServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,10 @@ class SettingServiceProvider extends ServiceProvider
 		Blade::directive('rendersettings', function($expression){
 			return "<?php echo renderSettings($expression); ?>";
 		});
+
+		// Blade::if('settings', function($expression){
+		// 	return 
+		// })
 	}
 
 	/**
@@ -32,10 +38,10 @@ class SettingServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->app->singleton('settings', function($app){
-			return new SettingService(new Models\Setting);
+			return new SettingService(new Repositories\EloquentRepositories\EloquentSettingRepository(new Models\Setting));
 		});
 
-		$this->app->singleton(\Repositories\SettingRepository::class, \Repositories\EloquentRepositories\EloquentSettingRepository::class);
+		$this->app->singleton(SettingRepository::class, EloquentSettingRepository::class);
 	}
 
 	/**

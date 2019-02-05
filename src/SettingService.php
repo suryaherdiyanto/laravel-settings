@@ -2,14 +2,14 @@
 
 namespace Setting;
 
-use Setting\Models\Setting;
+use Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 
 class SettingService
 {
     private $setting_path;
     public $setting;
 
-    public function __construct(Setting $setting)
+    public function __construct(EloquentSettingRepository $setting)
     {
         $this->setting_path = resource_path('settings');
         $this->setting = $setting;

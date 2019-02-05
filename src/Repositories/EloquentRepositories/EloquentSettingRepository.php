@@ -1,11 +1,11 @@
 <?php 
 
-namespace Repositories\EloquentRepositories;
+namespace Setting\Repositories\EloquentRepositories;
 
 use Setting\Repositories\SettingRepository;
 use Setting\Models\Setting;
 
-class EloquentSettingRepositories implements SettingRepository {
+class EloquentSettingRepository implements SettingRepository {
 
     private $model;
 
@@ -22,7 +22,7 @@ class EloquentSettingRepositories implements SettingRepository {
         return $this->model->all();
     }
 
-    public function find(integer $id)
+    public function find(int $id)
     {
         return $this->model->findOrFail($id);
     }
@@ -33,7 +33,22 @@ class EloquentSettingRepositories implements SettingRepository {
     }
 
     public function get(string $group, string $name){
-        return $this->model->where('group', $group)->andWhere('name', $name)->first();
+        $setting = $this->model->where('group', $group)->where('name', $name)->first();
+        if($setting){
+            return $setting->value;
+        }
+        return false;
+    }
+
+    public function save(array $data)
+    {
+        $len = count($data['name']);
+        for ($i=0; $i < $len; $i++) { 
+            $this->model->updateOrCreate([
+                'name'  => $data['name'][$i],
+                'group' => $data['group']
+            ], ['value' => $data['value'][$i]]);
+        }
     }
 
 }

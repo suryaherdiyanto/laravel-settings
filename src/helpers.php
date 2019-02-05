@@ -10,7 +10,9 @@ if (!function_exists('renderSettings')) {
 
         foreach($settings_data as $value => $data){
             $view .= $settings->renderSetting(array_merge($data, ['i' => $i]), $value);
+            $view .= "<input type='hidden' value='$value' name='name[]'>";
         }
+        $view .= "<input type='hidden' value='$filename' name='group'>";
 
         return $view;
     }
