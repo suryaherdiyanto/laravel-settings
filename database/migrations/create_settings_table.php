@@ -18,7 +18,6 @@ class CreateSettingsTable extends Migration
             $table->string('name');
             $table->string('group');
             $table->string('value');
-            $table->string('type');
             $table->timestamps();
         });
     }

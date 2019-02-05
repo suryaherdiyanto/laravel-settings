@@ -7,7 +7,7 @@ use Setting\Models\Setting;
 class SettingService
 {
     private $setting_path;
-    private $setting;
+    public $setting;
 
     public function __construct(Setting $setting)
     {
@@ -23,7 +23,7 @@ class SettingService
 
     public function readSettingFile(string $filename): array
     {
-        return include($filename);
+        return include($this->setting_path . '/' . $filename);
     }
 
     /**
@@ -54,7 +54,7 @@ class SettingService
     /**
      * Save the setting
      * 
-     * @return Setting
+     * @return Setting\Models\Setting
      */
 
     public function saveSetting(array $args): Setting
@@ -67,8 +67,22 @@ class SettingService
         ]);
     }
 
-    public function renderSetting()
+    /**
+     * Render the setting view
+     * 
+     * @return view
+     */
+
+    public function renderSetting(array $data, string $name)
     {
-        
+        switch ($data['type']) {
+            case 'text':
+                return view('setting::settings.text', array_merge($data, ['name' => $name]))->render();
+                break;
+            
+            default:
+                return view('settings::settings.text', array_merge($data, ['name' => $name]))->render();
+                break;
+        }
     }
 }
