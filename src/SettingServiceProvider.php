@@ -19,7 +19,7 @@ class SettingServiceProvider extends ServiceProvider
 
 		$this->loadViewsFrom(__DIR__.'/../resources/views', 'setting');
 
-		Blade::directive('settings', function($expression){
+		Blade::directive('rendersettings', function($expression){
 			return "<?php echo renderSettings($expression); ?>";
 		});
 	}
