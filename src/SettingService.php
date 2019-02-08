@@ -77,18 +77,11 @@ class SettingService
 
     public function renderSetting(array $data, string $name)
     {
-        switch ($data['type']) {
-            case 'text':
-                return view('setting::settings.text', array_merge($data, ['name' => $name]))->render();
-                break;
-
-            case 'textarea':
-                return view('setting::settings.text', array_merge($data, ['name' => $name]))->render();
-                break;
-            
-            default:
-                throw new SettingTypeNotFoundException('Setting type '.$data['type']." is not defined");
-                break;
+        try{
+            return view('setting::settings.'.$data['type'], array_merge($data, ['name' => $name]))->render();
+        }catch(Exception $e) {
+            throw new SettingTypeNotFoundException('Setting type '.$data['type']." is not defined");
         }
+        
     }
 }
