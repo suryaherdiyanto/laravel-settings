@@ -47,8 +47,12 @@ class EloquentSettingRepository implements SettingRepository {
             $this->model->updateOrCreate([
                 'name'  => $data['name'][$i],
                 'group' => $data['group']
-            ], ['value' => $data['value'][$i]]);
+            ], ['value' => isset($data['value'][$i]) ? $data['value'][$i]:'']);
         }
+    }
+
+    public function ifExists(string $group, string $name){
+        return $this->model->where('group', $group)->where('name', $name)->first() ? true:false;
     }
 
 }

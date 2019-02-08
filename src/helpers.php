@@ -49,3 +49,15 @@ if(!function_exists('setting')){
         return app('settings')->getSetting($key);
     }
 }
+
+/**
+ * Check if setting already in database or not
+ * 
+ * @return boolean
+ */
+
+if(!function_exists('settingExists')){
+    function settingExists($group, $name){
+        return app('settings')->setting->ifExists($group, $name);
+    }
+}

@@ -80,7 +80,7 @@ class SettingService
         if(!view()->exists('setting::settings.'.$data['type'])){
             throw new SettingTypeNotFoundException('Setting type '.$data['type']." is not defined");
         }
-        return view('setting::settings.'.$data['type'], array_merge($data, ['name' => $name]))->render();
+        return view('setting::settings.'.$data['type'], array_merge($data, ['name' => $name, 'value' => settings($data['group'] . '.' . $name)]))->render();
         
     }
 }
