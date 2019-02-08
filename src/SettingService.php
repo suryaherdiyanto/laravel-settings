@@ -23,7 +23,7 @@ class SettingService
 
     public function readSettingFile(string $filename): array
     {
-        return include($this->setting_path . '/' . $filename);
+        return include($this->setting_path . '/' . $filename . '.php');
     }
 
     /**
@@ -34,8 +34,9 @@ class SettingService
 
     public function getSetting(string $key)
     {
-        $settings = $this->readSettingFile(ltrim(explode('.', $key)[0]));
-        $keys = ltrim(str_replace($settings), '.');
+        $filename = explode('.', $key)[0];
+        $settings = $this->readSettingFile(ltrim($filename));
+        $keys = ltrim(str_replace($filename, '', $key), '.');
 
         return array_dot($settings)[$keys] ?: false;
     }

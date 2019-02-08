@@ -1,5 +1,11 @@
 <?php 
 
+/**
+ * Render the setting file to view
+ * 
+ * @return View
+ */
+
 if (!function_exists('renderSettings')) {
     function renderSettings(string $filename){
         $settings = app('settings');
@@ -18,10 +24,28 @@ if (!function_exists('renderSettings')) {
     }
 }
 
+/**
+ * Get the setting value from database
+ * 
+ * @return mix
+ */
+
 if(!function_exists('settings')){
     function settings($key){
         $settings = app('settings');
         $keys = explode('.', $key);
         return $settings->setting->get($keys[0], $keys[1]);
+    }
+}
+
+/**
+ * Read the setting file and return the key value
+ * 
+ * @return mix
+ */
+
+if(!function_exists('setting')){
+    function settings($key){
+        return app('settings')->getSetting($key);
     }
 }
