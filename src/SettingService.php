@@ -77,11 +77,10 @@ class SettingService
 
     public function renderSetting(array $data, string $name)
     {
-        try{
-            return view('setting::settings.'.$data['type'], array_merge($data, ['name' => $name]))->render();
-        }catch(Exception $e) {
+        if(!view()->exists('setting::settings.'.$data['type'])){
             throw new SettingTypeNotFoundException('Setting type '.$data['type']." is not defined");
         }
+        return view('setting::settings.'.$data['type'], array_merge($data, ['name' => $name]))->render();
         
     }
 }
