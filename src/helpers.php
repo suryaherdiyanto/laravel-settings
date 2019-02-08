@@ -12,10 +12,10 @@ if (!function_exists('renderSettings')) {
         $view = '';
         $i = 0;
 
-        $settings_data = $settings->readSettingFile($filename . '.php');
+        $settings_data = $settings->readSettingFile($filename);
 
         foreach($settings_data as $value => $data){
-            $view .= $settings->renderSetting(array_merge($data, ['i' => $i]), $value);
+            $view .= $settings->renderSetting(array_merge($data, ['i' => $i, 'group' => $filename]), $value);
             $view .= "<input type='hidden' value='$value' name='name[]'>";
         }
         $view .= "<input type='hidden' value='$filename' name='group'>";
@@ -45,7 +45,7 @@ if(!function_exists('settings')){
  */
 
 if(!function_exists('setting')){
-    function settings($key){
+    function setting($key){
         return app('settings')->getSetting($key);
     }
 }
