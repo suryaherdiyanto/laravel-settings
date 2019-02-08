@@ -3,6 +3,7 @@
 namespace Setting;
 
 use Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
+use Setting\Exceptions\SettingTypeNotFoundException;
 
 class SettingService
 {
@@ -82,7 +83,7 @@ class SettingService
                 break;
             
             default:
-                return view('settings::settings.text', array_merge($data, ['name' => $name]))->render();
+                throw new SettingTypeNotFoundException('Setting type '.$data['type']." is not defined");
                 break;
         }
     }
