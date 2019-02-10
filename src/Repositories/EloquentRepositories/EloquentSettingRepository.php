@@ -34,10 +34,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     public function get(string $group, string $name){
         $setting = $this->model->where('group', $group)->where('name', $name)->first();
-        if($setting){
-            return $setting->value;
-        }
-        return false;
+        return ($setting) ? $setting->value:setting($group . '.' . $name . '.' . 'default');
     }
 
     public function save(array $data)
