@@ -1,0 +1,27 @@
+{
+    "name": "surya/laravel-settings",
+    "description": "A laravel package for manage your app settings",
+    "require": {
+        "php": ">=7.0",
+        "illuminate/container": "~5.5.0|~5.6.0|~5.7.0",
+        "illuminate/database": "~5.5.0|~5.6.0|5.7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "surya",
+            "email": "suryaherdiyanto@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Surya\\Setting": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
