@@ -39,7 +39,7 @@ class SettingService
         $settings = $this->readSettingFile(ltrim($filename));
         $keys = ltrim(str_replace($filename, '', $key), '.');
 
-        return array_dot($settings)[$keys] ?: false;
+        return isset(array_dot($settings)[$keys]) ? array_dot($settings)[$keys] : false;
     }
 
     /**
