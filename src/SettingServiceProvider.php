@@ -25,9 +25,9 @@ class SettingServiceProvider extends ServiceProvider
 			return "<?php echo renderSettings($expression); ?>";
 		});
 
-		// Blade::if('settings', function($expression){
-		// 	return 
-		// })
+		Blade::directive('settings', function($expression){
+			return  "<?php echo settings($expression); ?>";
+		});
 	}
 
 	/**
