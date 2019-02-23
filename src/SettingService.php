@@ -54,22 +54,6 @@ class SettingService
     }
 
     /**
-     * Save the setting
-     * 
-     * @return Setting\Models\Setting
-     */
-
-    public function saveSetting(array $args): Setting
-    {
-        return $this->setting->create([
-            'name'  => $args['name'],
-            'group' => $args['group'],
-            'value' => $args['value'],
-            'type'  => $args['type']
-        ]);
-    }
-
-    /**
      * Render the setting view
      * 
      * @return view
