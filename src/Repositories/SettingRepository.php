@@ -1,6 +1,6 @@
 <?php
 
-namespace Setting\Repositories;
+namespace Surya\Setting\Repositories;
 
 interface SettingRepository{
     

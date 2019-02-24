@@ -1,6 +1,6 @@
 <?php
 
-namespace Setting\Exceptions;
+namespace Surya\Setting\Exceptions;
 
 class SettingTypeNotFoundException extends \Exception
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Setting;
+namespace Surya\Setting;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Setting\Repositories\SettingRepository;
-use Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
+use Surya\Setting\Repositories\SettingRepository;
+use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 
 class SettingServiceProvider extends ServiceProvider
 {
