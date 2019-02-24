@@ -1,6 +1,6 @@
 <?php
 
-namespace Setting\Models;
+namespace Surya\Setting\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

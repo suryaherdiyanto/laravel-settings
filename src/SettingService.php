@@ -1,9 +1,9 @@
 <?php
 
-namespace Setting;
+namespace Surya\Setting;
 
-use Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
-use Setting\Exceptions\SettingTypeNotFoundException;
+use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
+use Surya\Setting\Exceptions\SettingTypeNotFoundException;
 
 class SettingService
 {

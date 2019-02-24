@@ -1,9 +1,9 @@
 <?php 
 
-namespace Setting\Repositories\EloquentRepositories;
+namespace Surya\Setting\Repositories\EloquentRepositories;
 
-use Setting\Repositories\SettingRepository;
-use Setting\Models\Setting;
+use Surya\Setting\Repositories\SettingRepository;
+use Surya\Setting\Models\Setting;
 
 class EloquentSettingRepository implements SettingRepository {
 
