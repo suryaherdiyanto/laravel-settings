@@ -18,7 +18,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Surya\\Setting": "src/"
+            "Surya\\Setting\\": "src/"
         },
         "files": [
             "src/helpers.php"
