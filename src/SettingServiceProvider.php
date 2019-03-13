@@ -4,8 +4,6 @@ namespace Surya\Setting;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Surya\Setting\Repositories\SettingRepository;
-use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 
 class SettingServiceProvider extends ServiceProvider
 {
@@ -37,11 +35,9 @@ class SettingServiceProvider extends ServiceProvider
 	*/
 	public function register()
 	{
-		$this->app->singleton('settings', function($app){
-			return new SettingService(new Repositories\EloquentRepositories\EloquentSettingRepository(new Models\Setting));
+		$this->app->singleton('setting', function($app){
+			return new SettingService(new Models\Setting);
 		});
-
-		$this->app->singleton(SettingRepository::class, EloquentSettingRepository::class);
 	}
 
 	/**

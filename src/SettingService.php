@@ -4,16 +4,17 @@ namespace Surya\Setting;
 
 use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 use Surya\Setting\Exceptions\SettingTypeNotFoundException;
+use Surya\Setting\Models\Setting;
 
 class SettingService
 {
     private $setting_path;
-    public $setting;
+    private $setting;
 
-    public function __construct(EloquentSettingRepository $setting)
+    public function __construct(Setting $setting)
     {
         $this->setting_path = resource_path('settings');
-        $this->setting = $setting;
+        $this->setting = new EloquentSettingRepository($setting);
     }
 
     /**
@@ -21,19 +22,30 @@ class SettingService
      * 
      * @return array
      */
-
     public function readSettingFile(string $filename): array
     {
         return include($this->setting_path . '/' . $filename . '.php');
     }
 
     /**
+     * Get setting value from database
+     * 
+     * @param string $key
+     * @return mix
+     */
+    public function get(string $key)
+    {
+        $keys = explode('.', $key);
+        return $this->setting->get($keys[0], $keys[1]);
+    }
+
+    /**
      * Get setting from setting file
      * 
+     * @param $key
      * @return string|false
      */
-
-    public function getSetting(string $key)
+    public function getSettingProp(string $key)
     {
         $filename = explode('.', $key)[0];
         $settings = $this->readSettingFile(ltrim($filename));
@@ -47,18 +59,29 @@ class SettingService
      * 
      * @return string
      */
-
     public function getSettingPath(): string
     {
         return $this->setting_path;
     }
 
     /**
+     * Save settings data to database
+     * 
+     * @param array $data
+     * @return Surya\Setting\Model\Settings
+     */
+    public function save(array $data)
+    {
+        return $this->setting->save($data);
+    }
+
+    /**
      * Render the setting view
      * 
+     * @param array $data 
+     * @param string $name
      * @return view
      */
-
     public function renderSetting(array $data, string $name)
     {
         if(!view()->exists('setting::settings.'.$data['type'])){
@@ -66,5 +89,17 @@ class SettingService
         }
         return view('setting::settings.'.$data['type'], array_merge($data, ['name' => $name, 'value' => settings($data['group'] . '.' . $name)]))->render();
         
+    }
+
+    /**
+     * Check if setting already in database or not
+     * 
+     * @param string $group
+     * @param string $name
+     * @return boolean
+     */
+    public function exists(string $group, string $name)
+    {
+        return $this->setting->ifExists($group, $name);
     }
 }
