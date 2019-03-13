@@ -8,14 +8,13 @@
 
 if (!function_exists('renderSettings')) {
     function renderSettings(string $filename){
-        $settings = app('settings');
         $view = '';
         $i = 0;
 
-        $settings_data = $settings->readSettingFile($filename);
+        $settings_data = Setting::readSettingFile($filename);
 
         foreach($settings_data as $value => $data){
-            $view .= $settings->renderSetting(array_merge($data, ['i' => $i, 'group' => $filename]), $value);
+            $view .= Setting::renderSetting(array_merge($data, ['i' => $i, 'group' => $filename]), $value);
             $view .= "<input type='hidden' value='$value' name='name[]'>";
         }
         $view .= "<input type='hidden' value='$filename' name='group'>";
@@ -27,37 +26,38 @@ if (!function_exists('renderSettings')) {
 /**
  * Get the setting value from database
  * 
+ * @param string $key
  * @return mix
  */
 
 if(!function_exists('settings')){
-    function settings($key){
-        $settings = app('settings');
-        $keys = explode('.', $key);
-        return $settings->setting->get($keys[0], $keys[1]);
+    function settings(string $key){
+        return Setting::get($key);
     }
 }
 
 /**
  * Read the setting file and return the key value
  * 
+ * @param string $key
  * @return mix
  */
 
 if(!function_exists('setting')){
-    function setting($key){
-        return app('settings')->getSetting($key);
+    function setting(string $key){
+        return Setting::getSettingProp($key);
     }
 }
 
 /**
  * Check if setting already in database or not
  * 
+ * @param string $group
+ * @param string $name
  * @return boolean
  */
-
 if(!function_exists('settingExists')){
     function settingExists($group, $name){
-        return app('settings')->setting->ifExists($group, $name);
+        return Setting::exists($group, $name);
     }
 }
