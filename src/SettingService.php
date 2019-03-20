@@ -78,16 +78,15 @@ class SettingService
     /**
      * Render the setting view
      * 
-     * @param array $data 
-     * @param string $name
+     * @param array $data
      * @return view
      */
-    public function renderSetting(array $data, string $name)
+    public function renderSetting(array $data)
     {
         if(!view()->exists('setting::settings.'.$data['type'])){
             throw new SettingTypeNotFoundException('Setting type '.$data['type']." is not defined");
         }
-        return view('setting::settings.'.$data['type'], array_merge($data, ['name' => $name, 'value' => settings($data['group'] . '.' . $name)]))->render();
+        return view('setting::settings.'.$data['type'], $data)->render();
         
     }
 
