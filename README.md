@@ -22,6 +22,16 @@ Also register the Facade Alias
 ]
 ```
 
+Publish migration table
+```
+php artisan vendor:publish --provider="Surya\Setting\SettingServiceProvider::class" --tag="migrations"
+```
+
+Migrate
+```
+php artisan migrate
+```
+
 # Usage
 By default the folder that use for store our setting is located in `resources/settings`, so you must create `settings` folder by your self.
 
