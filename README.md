@@ -1,8 +1,8 @@
-#Laravel Settings
+# Laravel Settings
 A laravel package for manage your app settings
 <hr>
 
-#Installation
+# Installation
 ```
 composer require surya/laravel-settings
 ```
@@ -22,10 +22,10 @@ Also register the Facade Alias
 ]
 ```
 
-#Usage
+# Usage
 By default the folder that use for store our setting is located in `resources/settings`, so you must create `settings` folder by your self.
 
-##Creating Setting File
+## Creating Setting File
 Let's create setting file call `general.php`
 ```php
 return [
@@ -54,7 +54,7 @@ available setting properties:
 3. label => the setting label.
 4. options => this specific for type select and radio only.
 
-##Rendering Setting File
+## Rendering Setting File
 After the setting file was created. You can render the setting file by using blade directive
 ```php
 @rendersettings('general')
@@ -69,7 +69,7 @@ After the setting file was created. You can render the setting file by using bla
 ```
 All the setting type are bootstrap friendly so it will adapt to your bootstrap theme.
 
-##Saving Your Setting
+## Saving Your Setting
 You can simply use facade to saving settings
 ```php
 use Setting;
@@ -85,7 +85,7 @@ class SettingController extends Controller
 }
 ```
 
-##Play With Value
+## Play With Value
 
 Getting Setting Value
 <hr>
@@ -127,7 +127,7 @@ or
 settingExists('group', 'key')
 ```
 
-##Modify Setting Type
+## Modify Setting Type
 You still has control for modify each of setting type or adding new setting type.
 
 publish setting types view
