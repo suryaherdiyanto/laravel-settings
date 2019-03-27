@@ -18,6 +18,28 @@ class SettingService
     }
 
     /**
+     * Get all settings from database
+     * 
+     * @return Illuminate\Support\Collection
+     */
+
+    public function all(array $cols = ['name', 'value'])
+    {
+        return $this->setting->all($cols);
+    }
+
+    /**
+     * Get all settings based on given group
+     * 
+     * @return Illuminate\Support\Collection
+     */
+
+     public function getByGroup(string $group)
+     {
+         return $this->setting->getByGroup($group);
+     }
+
+    /**
      * Read the setting file
      * 
      * @return array
