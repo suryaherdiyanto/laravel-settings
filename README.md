@@ -24,7 +24,7 @@ Also register the Facade Alias
 
 Publish migration table
 ```
-php artisan vendor:publish --provider="Surya\Setting\SettingServiceProvider::class" --tag="migrations"
+php artisan vendor:publish --provider="Surya\Setting\SettingServiceProvider" --tag="migrations"
 ```
 
 Migrate
@@ -142,7 +142,7 @@ You still has control for modify each of setting type or adding new setting type
 
 publish setting types view
 ```
-php artisan vendor:publish --provider="Surya\Setting\SettingServiceProvider::class" --tag="views"
+php artisan vendor:publish --provider="Surya\Setting\SettingServiceProvider" --tag="views"
 ```
 as you can see in `resources/view/vendor/setting/settings` each setting `type` view has exact name of `type` property, so if you want additional setting type just add another view file.
 
