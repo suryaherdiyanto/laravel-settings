@@ -25,7 +25,7 @@ class SettingService
 
     public function all(array $cols = ['name', 'value'])
     {
-        return $this->setting->all($cols);
+        return $this->setting->all($cols)->keyBy('name');
     }
 
     /**
@@ -36,7 +36,7 @@ class SettingService
 
      public function getByGroup(string $group)
      {
-         return $this->setting->getByGroup($group);
+         return $this->setting->getByGroup($group)->keyBy('name');
      }
 
     /**
