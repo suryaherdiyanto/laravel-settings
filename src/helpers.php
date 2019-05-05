@@ -16,6 +16,7 @@ if (!function_exists('renderSettings')) {
         foreach($settings_data as $key => $data){
             $view .= Setting::renderSetting(array_merge($data, ['i' => $i, 'group' => $filename, 'value' => Setting::get($filename . '.' . $key), 'name'  => $key]));
             $view .= "<input type='hidden' value='$key' name='name[]'>";
+            $i++;
         }
         $view .= "<input type='hidden' value='$filename' name='group'>";
 
