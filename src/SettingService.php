@@ -4,17 +4,17 @@ namespace Surya\Setting;
 
 use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 use Surya\Setting\Exceptions\SettingTypeNotFoundException;
-use Surya\Setting\Models\Setting;
+use Surya\Setting\Repositories\SettingRepository;
 
 class SettingService
 {
     private $setting_path;
     private $setting;
 
-    public function __construct(Setting $setting)
+    public function __construct()
     {
         $this->setting_path = resource_path('settings');
-        $this->setting = new EloquentSettingRepository($setting);
+        $this->setting = app(SettingRepository::class);
     }
 
     /**

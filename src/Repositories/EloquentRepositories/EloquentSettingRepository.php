@@ -9,9 +9,9 @@ class EloquentSettingRepository implements SettingRepository {
 
     private $model;
 
-    public function __construct(Setting $setting)
+    public function __construct()
     {
-        $this->model = $setting;
+        $this->model = new Setting;
     }
 
     /**

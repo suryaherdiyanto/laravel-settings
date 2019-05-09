@@ -12,5 +12,9 @@ interface SettingRepository{
 
     public function get(string $group, string $name);
 
+    public function getByGroup(string $group, array $cols);
+
     public function save(array $data);
+
+    public function ifExists(string $group, string $name);
 }

@@ -4,6 +4,9 @@ namespace Surya\Setting;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Surya\Setting\Repositories\SettingRepository;
+use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
+use Surya\Setting\Repositories\Cache\SettingCacheRepository;
 
 class SettingServiceProvider extends ServiceProvider
 {
@@ -38,6 +41,17 @@ class SettingServiceProvider extends ServiceProvider
 		$this->app->singleton('setting', function($app){
 			return new SettingService(new Models\Setting);
 		});
+
+		$this->app->singleton(SettingRepository::class, function() {
+			if (config('setting.caching')) {
+				return new SettingCacheRepository;
+			}
+			return new EloquentSettingRepository;
+		});
+
+		$this->mergeConfigFrom(
+			__DIR__ . '/../config/setting.php', 'setting'
+		);
 	}
 
 	/**
@@ -48,13 +62,19 @@ class SettingServiceProvider extends ServiceProvider
 	private function publishFiles()
 	{
 		$this->publishes([
-			__DIR__.'/../database/migrations' => database_path('migrations')
+			__DIR__ . '/../database/migrations' => database_path('migrations')
 		], 'migrations');
+
 		$this->publishes([
-			__DIR__.'/../resources/assets' => resource_path('assets')
+			__DIR__ . '/../resources/assets' => resource_path('assets')
 		], 'assets');
+
 		$this->publishes([
-			__DIR__.'/../resources/views/settings' => resource_path('views/vendor/setting/settings')
+			__DIR__ . '/../resources/views/settings' => resource_path('views/vendor/setting/settings')
 		], 'views');
+		 
+		$this->publishes([
+			__DIR__ . '/../resources/config' => config_path()
+		], 'config');
 	}
 }
