@@ -66,10 +66,6 @@ class SettingServiceProvider extends ServiceProvider
 		], 'migrations');
 
 		$this->publishes([
-			__DIR__ . '/../resources/assets' => resource_path('assets')
-		], 'assets');
-
-		$this->publishes([
 			__DIR__ . '/../resources/views/settings' => resource_path('views/vendor/setting/settings')
 		], 'views');
 		 
