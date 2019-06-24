@@ -4,6 +4,7 @@ namespace Surya\Setting;
 
 use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 use Surya\Setting\Exceptions\SettingTypeNotFoundException;
+use Surya\Setting\Exceptions\SettingLabelNotSpecifiedException;
 use Surya\Setting\Repositories\SettingRepository;
 
 class SettingService
@@ -108,6 +109,29 @@ class SettingService
         if(!view()->exists('setting::settings.'.$data['type'])){
             throw new SettingTypeNotFoundException('Setting type '.$data['type']." is not defined");
         }
+
+        if (isset($data['source'])) {
+            $source = new $data['source'];
+
+            $value = isset($data['key']) ?: 'id';
+
+            if (!isset($data['show_label'])) {
+                throw new SettingLabelNotSpecifiedException("Show Label not specified", 1);
+            }
+
+            $dataSource = $source->select([$value, $data['show_label']])->orderBy($value)->get();
+            unset($source);
+        }
+
+        if (isset($dataSource)) {
+            $sourceCount = $dataSource->count();
+            $dataSource = $dataSource->toArray();
+
+            for ($i=0; $i < $sourceCount; $i++) { 
+                $data['options'][$dataSource[$i]['id']] = $dataSource[$i][$data['show_label']];
+            }
+        }
+
         return view('setting::settings.'.$data['type'], $data)->render();
         
     }
