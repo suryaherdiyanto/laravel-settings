@@ -129,7 +129,7 @@ class EloquentSettingRepository implements SettingRepository {
      * 
      * @param string $group
      * @param string $name
-     * @return bollean
+     * @return boolean
      */
 
     public function ifExists(string $group, string $name){
