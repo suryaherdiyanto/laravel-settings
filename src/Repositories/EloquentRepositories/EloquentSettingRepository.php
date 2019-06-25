@@ -74,7 +74,7 @@ class EloquentSettingRepository implements SettingRepository {
     public function get(string $group, string $name)
     {
         $setting = $this->getSetting($group, $name);
-        return ($setting) ? $setting->value:setting($group . '.' . $name . '.' . 'default');
+        return ($setting) ? $setting->value : setting($group . '.' . $name . '.' . 'default');
     }
 
     /**
@@ -87,7 +87,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     public function getByGroup(string $group, array $cols = ['name', 'value'])
     {
-        return $this->model->select($cols)->where('group', $group)->orderBy('name')->get();
+        return $this->model->select($cols)->where('group', $group)->get();
     }
 
     /**
