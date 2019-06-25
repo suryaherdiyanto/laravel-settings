@@ -133,7 +133,10 @@ class EloquentSettingRepository implements SettingRepository {
      */
 
     public function ifExists(string $group, string $name){
-        return $this->model->where('group', $group)->where('name', $name)->first() ? true:false;
+        return $this->model
+                    ->select('id')
+                    ->where('group', $group)->where('name', $name)
+                    ->first() ? true:false;
     }
 
 }
