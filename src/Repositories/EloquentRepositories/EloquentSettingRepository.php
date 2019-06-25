@@ -60,7 +60,11 @@ class EloquentSettingRepository implements SettingRepository {
 
     public function getSetting(string $group, string $name)
     {
-        return $this->model->where('group', $group)->where('name', $name)->first();
+        return $this->model
+                    ->select(['id', 'group', 'name'])
+                    ->where('group', $group)
+                    ->where('name', $name)
+                    ->first();
     }
 
     /**
@@ -87,7 +91,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     public function getByGroup(string $group, array $cols = ['name', 'value'])
     {
-        return $this->model->select($cols)->where('group', $group)->get();
+        return $this->model->select($cols)->where('group', $group)->orderBy('name')->get();
     }
 
     /**
