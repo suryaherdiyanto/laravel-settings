@@ -61,7 +61,7 @@ class EloquentSettingRepository implements SettingRepository {
     public function getSetting(string $group, string $name)
     {
         return $this->model
-                    ->select(['id', 'group', 'name'])
+                    ->select(['id', 'group', 'name', 'value'])
                     ->where('group', $group)
                     ->where('name', $name)
                     ->first();
