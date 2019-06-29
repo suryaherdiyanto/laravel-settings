@@ -136,7 +136,7 @@ class EloquentSettingRepository implements SettingRepository {
         return $this->model
                     ->select('id')
                     ->where('group', $group)->where('name', $name)
-                    ->first() ? true:false;
+                    ->first() ? true : false;
     }
 
 }

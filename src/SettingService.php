@@ -91,7 +91,7 @@ class SettingService
      * Save settings data to database
      * 
      * @param array $data
-     * @return Surya\Setting\Model\Settings
+     * @return Surya\Setting\Model\Setting
      */
     public function save(array $data)
     {
