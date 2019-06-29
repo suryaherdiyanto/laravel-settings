@@ -155,3 +155,21 @@ for example if you want create setting that accept email
 ```
 > all properties for each setting key are automatically passed.
 save as `email.blade.php` and it's automatically recognized as email setting type.
+
+## New In 1.2.+
+You can now add resource key for select setting type
+
+for example, if you want select a primary user from database
+```php
+return [
+    'primary_user'    => [
+        'type'  => 'select',
+        'label' => 'Select a Primary User',
+        'source'    => App\User::class,
+        'show_label'     => 'email'
+    ],
+]
+```
+There are 3 new keys, `source` is the model source `show_label` model property `key` if your model primary key is `id` just leave it empty.
+
+> currently the source key only work for `select` setting type
