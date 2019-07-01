@@ -60,7 +60,11 @@ class EloquentSettingRepository implements SettingRepository {
 
     public function getSetting(string $group, string $name)
     {
-        return $this->model->where('group', $group)->where('name', $name)->first();
+        return $this->model
+                    ->select(['id', 'group', 'name', 'value'])
+                    ->where('group', $group)
+                    ->where('name', $name)
+                    ->first();
     }
 
     /**
@@ -74,7 +78,7 @@ class EloquentSettingRepository implements SettingRepository {
     public function get(string $group, string $name)
     {
         $setting = $this->getSetting($group, $name);
-        return ($setting) ? $setting->value:setting($group . '.' . $name . '.' . 'default');
+        return ($setting) ? $setting->value : setting($group . '.' . $name . '.' . 'default');
     }
 
     /**
@@ -125,11 +129,14 @@ class EloquentSettingRepository implements SettingRepository {
      * 
      * @param string $group
      * @param string $name
-     * @return bollean
+     * @return boolean
      */
 
     public function ifExists(string $group, string $name){
-        return $this->model->where('group', $group)->where('name', $name)->first() ? true:false;
+        return $this->model
+                    ->select('id')
+                    ->where('group', $group)->where('name', $name)
+                    ->first() ? true : false;
     }
 
 }
