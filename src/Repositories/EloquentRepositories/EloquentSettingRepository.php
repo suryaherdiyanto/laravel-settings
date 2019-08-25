@@ -104,23 +104,25 @@ class EloquentSettingRepository implements SettingRepository {
     public function save(array $data)
     {
         $len = count($data['name']);
-        if (count($data['name']) !== count($data['value'])) {
-            for ($i=0; $i < $len; $i++) { 
-                if(setting($data['group'].'.'.$data['name'][$i].'.type') === 'check'){
-                    $setting = $this->getSetting($data['group'], $data['name'][$i]);
-                    $setting->value = '';
-                    $setting->save();
-                    
-                    array_splice($data['name'], $i, 1);
-                    $len = count($data['name']);
-                }
+        for ($i=0; $i < $len; $i++) {
+
+            $setting = $this->model->where('name', $data['name'][$i])->where('group', $data['group'])->first();
+            
+            if ( $data[$data['name'][$i]] instanceof \Illuminate\Http\UploadedFile) {
+                $data[$data['name'][$i]] = $this->handleFileUpload($data[$data['name'][$i]]);
             }
-        }
-        for ($i=0; $i < $len; $i++) { 
-            $this->model->updateOrCreate([
-                'name'  => $data['name'][$i],
-                'group' => $data['group']
-            ], ['value' => isset($data['value'][$i]) ? $data['value'][$i]:'']);
+
+            if (!$setting) {
+                $setting = $this->model->create([
+                    'group' => $data['group'],
+                    'name' => $data['name'][$i]
+                ]);
+            }
+
+            if (isset($data[$data['name'][$i]])) {
+                $setting->value = $data[$data['name'][$i]];
+                $setting->save();
+            }
         }
     }
 
@@ -137,6 +139,12 @@ class EloquentSettingRepository implements SettingRepository {
                     ->select('id')
                     ->where('group', $group)->where('name', $name)
                     ->first() ? true : false;
+    }
+
+    public function handleFileUpload($file) {
+        $filename = $file->getClientOriginalName();
+
+        return $file->storeAs('uploads/', $filename);
     }
 
 }
