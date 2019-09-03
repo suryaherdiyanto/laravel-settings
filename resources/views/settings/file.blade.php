@@ -1,4 +1,7 @@
 <div class="form-group">
     <label for="file-{{ $i }}">{{ $label }}</label>
-    <input type="file" id="file-{{ $i }}" value="{{ $value }}" accept="{{ implode(',', $accept) }}" name="{{ $name }}">
+    <div class="img-preview">
+        <img src="{{ getFileUrl($value) }}" style="max-width: 250px" alt="" class="img">
+    </div>
+    <input type="file" id="file-{{ $i }}" accept="{{ implode(',', $accept) }}" name="{{ $name }}">
 </div>

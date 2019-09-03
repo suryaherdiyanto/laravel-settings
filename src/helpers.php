@@ -62,3 +62,14 @@ if(!function_exists('settingExists')){
         return Setting::exists($group, $name);
     }
 }
+
+/**
+ * Get file url for file setting type
+ * 
+ * @return string
+ */
+if (!function_exists('getFileUrl')) {
+    function getFileUrl(string $url) {
+        return Storage::disk(config('filesystem.default'))->url($url);
+    }
+}
