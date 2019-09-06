@@ -78,6 +78,9 @@ class EloquentSettingRepository implements SettingRepository {
     public function get(string $group, string $name)
     {
         $setting = $this->getSetting($group, $name);
+        if (setting($group . '.' . $name . '.type') == 'check') {
+            return ($setting) ? explode(',', $setting->value) : setting($group . '.' . $name . '.' . 'default');
+        }
         return ($setting) ? $setting->value : setting($group . '.' . $name . '.' . 'default');
     }
 
@@ -103,26 +106,40 @@ class EloquentSettingRepository implements SettingRepository {
 
     public function save(array $data)
     {
+        // dd($data);
         $len = count($data['name']);
         for ($i=0; $i < $len; $i++) {
 
             $setting = $this->model->where('name', $data['name'][$i])->where('group', $data['group'])->first();
             
-            if ( $data[$data['name'][$i]] instanceof \Illuminate\Http\UploadedFile) {
-                $data[$data['name'][$i]] = $this->handleFileUpload($data[$data['name'][$i]]);
-            }
-
-            if (!$setting) {
-                $setting = $this->model->create([
-                    'group' => $data['group'],
-                    'name' => $data['name'][$i]
-                ]);
-            }
-
+            
             if (isset($data[$data['name'][$i]])) {
-                $setting->value = $data[$data['name'][$i]];
-                $setting->save();
+
+                if ($data[$data['name'][$i]] instanceof \Illuminate\Http\UploadedFile) {
+                    $data[$data['name'][$i]] = $this->handleFileUpload($data[$data['name'][$i]]);
+                }
+
+                if (!$setting) {
+                    $setting = $this->model->create([
+                        'group' => $data['group'],
+                        'name' => $data['name'][$i]
+                    ]);
+                }
+            }else {
+
+                if (setting($data['group'].'.'.$data['name'][$i].'.type') === 'file') {
+                    $data[$data['name'][$i]] = $setting->value;
+                }
             }
+
+            if (is_array($data[$data['name'][$i]])) {
+                $setting->value = implode(',', array_keys($data[$data['name'][$i]]));
+            }else {
+                $setting->value = $data[$data['name'][$i]];
+            }
+
+            $setting->save();
+
         }
     }
 
@@ -141,10 +158,16 @@ class EloquentSettingRepository implements SettingRepository {
                     ->first() ? true : false;
     }
 
-    public function handleFileUpload($file) {
+    /**
+     * Handle file upload for file
+     * 
+     * @param Illuminate\Http\UploadedFile $file
+     * @return string
+     */
+    public function handleFileUpload(Illuminate\Http\UploadedFile $file) {
         $filename = $file->getClientOriginalName();
 
-        return $file->storeAs('uploads/', $filename);
+        return $file->storeAs('public/uploads', $filename);
     }
 
 }
