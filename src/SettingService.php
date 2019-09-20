@@ -113,6 +113,8 @@ class SettingService
 
         if (isset($data['source'])) {
             
+            $data['options'] = [];
+
             if (!isset($data['show_label'])) {
                 throw new SettingLabelNotSpecifiedException("Show Label not specified", 1);
             }
