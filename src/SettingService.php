@@ -2,6 +2,7 @@
 
 namespace Surya\Setting;
 
+use Illuminate\Support\Arr;
 use Surya\Setting\Repositories\EloquentRepositories\EloquentSettingRepository;
 use Surya\Setting\Exceptions\SettingTypeNotFoundException;
 use Surya\Setting\Exceptions\SettingLabelNotSpecifiedException;
@@ -74,12 +75,7 @@ class SettingService
         $settings = $this->readSettingFile(ltrim($filename));
         $keys = ltrim(str_replace($filename, '', $key), '.');
 
-        if (!isset(array_dot($settings)[$keys])) {
-            $get = array_get($settings, $keys);
-            return ($get) ? $get : false;
-        }
-
-        return array_dot($settings)[$keys];
+        return Arr::get($settings, $keys, 0);
     }
 
     /**
@@ -137,7 +133,7 @@ class SettingService
                     $data['options'][$dataSource[$i]['id']] = $dataSource[$i][$data['show_label']];
                 }
             }
-            
+
         }
 
 
