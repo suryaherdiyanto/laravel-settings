@@ -116,26 +116,30 @@ class SettingService
         }
 
         if (isset($data['source'])) {
+            
+            if (!isset($data['show_label'])) {
+                throw new SettingLabelNotSpecifiedException("Show Label not specified", 1);
+            }
+            
             $source = new $data['source'];
 
             $value = isset($data['key']) ?: 'id';
 
-            if (!isset($data['show_label'])) {
-                throw new SettingLabelNotSpecifiedException("Show Label not specified", 1);
-            }
 
             $dataSource = $source->select([$value, $data['show_label']])->orderBy($value)->get();
             unset($source);
-        }
-
-        if (isset($dataSource)) {
-            $sourceCount = $dataSource->count();
-            $dataSource = $dataSource->toArray();
-
-            for ($i=0; $i < $sourceCount; $i++) { 
-                $data['options'][$dataSource[$i]['id']] = $dataSource[$i][$data['show_label']];
+            
+            if (isset($dataSource)) {
+                $sourceCount = $dataSource->count();
+                $dataSource = $dataSource->toArray();
+    
+                for ($i=0; $i < $sourceCount; $i++) { 
+                    $data['options'][$dataSource[$i]['id']] = $dataSource[$i][$data['show_label']];
+                }
             }
+            
         }
+
 
         return view('setting::settings.'.$data['type'], $data)->render();
         
