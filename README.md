@@ -173,3 +173,29 @@ return [
 There are 3 new keys, `source` is the model source `show_label` model property `key` if your model primary key is `id` just leave it empty.
 
 > currently the source key only work for `select` setting type
+
+## New in 1.2.1
+
+New `switch` setting type.
+```php
+'example_switch'    => [
+        'type'  => 'switch',
+        'default'   => 0,
+        'label' => 'Switch Example',
+    ]
+```
+> in order to use switch use must include bootstrap otherwise you will get normal checkbox input
+
+Now the setting type `check` can use `options` key 
+```php
+'includes'   => [
+    'type'      => 'check',
+    'default'   => ['logo', 'profile'],
+    'label'     => 'Your website include: ',
+    'options'   => [
+        'profile'   => 'Your profile',
+        'logo'      => 'Your logo',
+        'identity'  => 'Your identity'
+    ]
+],
+```
