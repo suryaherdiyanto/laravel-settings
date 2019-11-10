@@ -13,4 +13,9 @@ return [
      */
     'caching'       => env('SETTING_CACHE', true),
 
+    /**
+     * Mode for retrive setting html supported view and api
+     */
+     'mode'         => env('SETTING_MODE', 'view')
+
 ];

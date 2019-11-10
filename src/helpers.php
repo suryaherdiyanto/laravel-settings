@@ -11,10 +11,19 @@ if (!function_exists('renderSettings')) {
         $view = '';
         $i = 0;
 
+        
         $settings_data = Setting::readSettingFile($filename);
+        
+        
+        foreach($settings_data as $key => $data) {
 
-        foreach($settings_data as $key => $data){
-            $view .= Setting::renderSetting(array_merge($data, ['i' => $i, 'group' => $filename, 'value' => Setting::get($filename . '.' . $key), 'name'  => $key]));
+            $view .= Setting::renderSetting(array_merge($data, [
+                                'i' => $i, 'group' => $filename,
+                                'value' => Setting::get($filename . '.' . $key), 
+                                'name'  => $key
+                                ]
+                            )
+                        );
             $view .= "<input type='hidden' value='$key' name='name[]'>";
             $i++;
         }
