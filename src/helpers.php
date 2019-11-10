@@ -3,11 +3,11 @@
 /**
  * Render the setting file to view
  * 
- * @return View
+ * @return string
  */
 
 if (!function_exists('renderSettings')) {
-    function renderSettings(string $filename){
+    function renderSettings(string $filename) : string {
         $view = '';
         $i = 0;
 
@@ -31,7 +31,7 @@ if (!function_exists('renderSettings')) {
  * @return mix
  */
 
-if(!function_exists('settings')){
+if(!function_exists('settings')) {
     function settings(string $key){
         return Setting::get($key);
     }
@@ -44,7 +44,7 @@ if(!function_exists('settings')){
  * @return mix
  */
 
-if(!function_exists('setting')){
+if(!function_exists('setting')) {
     function setting(string $key){
         return Setting::getSettingProp($key);
     }
@@ -57,8 +57,8 @@ if(!function_exists('setting')){
  * @param string $name
  * @return boolean
  */
-if(!function_exists('settingExists')){
-    function settingExists($group, $name){
+if(!function_exists('settingExists')) {
+    function settingExists($group, $name) : bool {
         return Setting::exists($group, $name);
     }
 }
@@ -69,7 +69,7 @@ if(!function_exists('settingExists')){
  * @return string
  */
 if (!function_exists('getFileUrl')) {
-    function getFileUrl(string $url) {
+    function getFileUrl(string $url) : string {
         return Storage::disk(config('filesystem.default'))->url($url);
     }
 }

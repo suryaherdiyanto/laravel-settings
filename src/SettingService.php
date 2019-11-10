@@ -103,7 +103,7 @@ class SettingService
      * Render the setting view
      * 
      * @param array $data
-     * @return view
+     * @return View
      */
     public function renderSetting(array $data)
     {
