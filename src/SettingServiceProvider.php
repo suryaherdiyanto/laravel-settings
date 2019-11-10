@@ -30,6 +30,16 @@ class SettingServiceProvider extends ServiceProvider
 			Blade::directive('settings', function($expression) {
 				return  "<?php echo settings($expression); ?>";
 			});
+		} else {
+			$statement = 'You currently in <b>api</b> setting mode please change it to <b>view</b> in <b>setting.php</b>';
+
+			Blade::directive('rendersettings', function($expression) use($statement) {
+				return $statement;
+			});
+	
+			Blade::directive('settings', function($expression) use($statement) {
+				return  $statement;
+			});
 		}
 	}
 
