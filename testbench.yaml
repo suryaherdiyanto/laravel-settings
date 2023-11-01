@@ -1,0 +1,22 @@
+providers:
+  - Workbench\App\Providers\WorkbenchServiceProvider
+  - Surya\Setting\SettingServiceProvider
+
+migrations:
+  - workbench/database/migrations
+  - database/migrations
+
+seeders:
+  - Workbench\Database\Seeders\DatabaseSeeder
+
+workbench:
+  start: '/'
+  install: true
+  discovers:
+    web: true
+    api: false
+    commands: false
+    views: false
+  build: []
+  assets: []
+  sync: []

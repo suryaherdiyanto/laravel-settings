@@ -10,10 +10,9 @@ use Surya\Setting\Repositories\Cache\SettingCacheRepository;
 
 class SettingServiceProvider extends ServiceProvider
 {
-	
 	/**
 	* Bootstrap any application services
-	* 
+	*
 	* @return  void
 	*/
 	public function boot()
@@ -26,7 +25,7 @@ class SettingServiceProvider extends ServiceProvider
 			Blade::directive('rendersettings', function($expression) {
 				return "<?php echo renderSettings($expression); ?>";
 			});
-	
+
 			Blade::directive('settings', function($expression) {
 				return  "<?php echo settings($expression); ?>";
 			});
@@ -36,7 +35,7 @@ class SettingServiceProvider extends ServiceProvider
 			Blade::directive('rendersettings', function($expression) use($statement) {
 				return $statement;
 			});
-	
+
 			Blade::directive('settings', function($expression) use($statement) {
 				return  $statement;
 			});
@@ -45,7 +44,7 @@ class SettingServiceProvider extends ServiceProvider
 
 	/**
 	* Register any application services
-	* 
+	*
 	* @return  void
 	*/
 	public function register()
@@ -68,7 +67,7 @@ class SettingServiceProvider extends ServiceProvider
 
 	/**
 	 * Publish required files
-	 * 
+	 *
 	 * @return void
 	 */
 	private function publishFiles()
@@ -80,7 +79,7 @@ class SettingServiceProvider extends ServiceProvider
 		$this->publishes([
 			__DIR__ . '/../resources/views/settings' => resource_path('views/vendor/setting/settings')
 		], 'views');
-		 
+
 		$this->publishes([
 			__DIR__ . '/../config' => config_path()
 		], 'config');
