@@ -53,6 +53,10 @@ class SettingServiceProvider extends ServiceProvider
 			return new SettingService(new Models\Setting);
 		});
 
+		$this->app->singleton(SettingUtil::class, function() {
+			return new SettingUtil;
+		});
+
 		$this->app->singleton(SettingRepository::class, function() {
 			if (config('setting.caching')) {
 				return new SettingCacheRepository;
