@@ -3,7 +3,7 @@
 namespace Surya\Setting;
 
 use Illuminate\Support\Arr;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 use Surya\Setting\Exceptions\SettingLabelNotSpecifiedException;
 use Surya\Setting\Exceptions\SettingTypeNotFoundException;
 
@@ -44,9 +44,11 @@ class SettingUtil
         }
     }
 
-    public function renderSetting(array $data)
+    public function renderSetting(array $data, string $name)
     {
         $this->throwsIfViewDoesntExists($data['type']);
+        $data['name'] = $name;
+
         if (isset($data['source'])) {
 
             $data['options'] = [];
@@ -70,7 +72,7 @@ class SettingUtil
 
         }
 
-        return view('setting::settings.'.$data['type'], $data)->render();
+        return View::make('setting::settings.'.$data['type'], $data)->render();
 
     }
 }
