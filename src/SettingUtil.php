@@ -44,10 +44,13 @@ class SettingUtil
         }
     }
 
-    public function renderSetting(array $data, string $name)
+    public function renderSetting(array $data, string $group, string $name)
     {
-        $this->throwsIfViewDoesntExists($data['type']);
         $data['name'] = $name;
+        $data['group'] = $group;
+        $this->throwsIfViewDoesntExists($data['type']);
+
+        $data['value'] = app('setting')->get("{$group}.{$name}");
 
         if (isset($data['source'])) {
 

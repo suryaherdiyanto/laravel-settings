@@ -35,11 +35,13 @@ class SettingUtilTest extends TestCase
 
     public function test_render_setting_with_correct_view()
     {
+        $this->mock('setting')
+            ->shouldReceive('get')->once()->andReturn('default');
         $this->assertStringContainsString('type="text"', app(SettingUtil::class)->renderSetting([
             'type' => 'text',
             'default' => 'test',
             'label' => 'test',
             'i' => 0
-        ], 'site_name'));
+        ], 'general', 'site_name'));
     }
 }
