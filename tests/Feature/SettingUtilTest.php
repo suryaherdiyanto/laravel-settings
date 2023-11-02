@@ -2,6 +2,7 @@
 
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
+use Surya\Setting\Exceptions\SettingTypeNotFoundException;
 use Surya\Setting\SettingUtil;
 
 class SettingUtilTest extends TestCase
@@ -43,5 +44,17 @@ class SettingUtilTest extends TestCase
             'label' => 'test',
             'i' => 0
         ], 'general', 'site_name'));
+    }
+
+    public function test_should_throw_error_if_setting_type_is_not_available()
+    {
+        $this->assertThrows(function() {
+            app(SettingUtil::class)->renderSetting([
+                'type' => 'invalid',
+                'default' => 'test',
+                'label' => 'test',
+                'i' => 0
+            ], 'general', 'site_name');
+        }, SettingTypeNotFoundException::class);
     }
 }
