@@ -56,9 +56,9 @@ class SettingUtil
 
             $data['options'] = [];
 
-            $source = new $data['source'];
+            $source = app($data['source']);
 
-            $value = isset($data['key']) ?: 'id';
+            $value = $data['key'] ?: 'id';
 
             $this->throwsIfLabelNotSpecified($data['label']);
             $dataSource = $source->select([$value, $data['show_label']])->orderBy($value)->get();
