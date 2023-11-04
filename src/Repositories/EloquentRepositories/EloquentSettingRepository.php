@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Surya\Setting\Repositories\EloquentRepositories;
 
@@ -16,21 +16,21 @@ class EloquentSettingRepository implements SettingRepository {
 
     /**
      * Get all settings from database
-     * 
+     *
      * @return Illuminate\Support\Collection
      */
 
     public function all(array $cols = [])
     {
         if (count($cols) > 0) {
-            return $this->model->select($cols)->get();         
+            return $this->model->select($cols)->get();
         }
         return $this->model->all();
     }
 
     /**
      * Find setting by id
-     * 
+     *
      * @return Surya\Setting\Model\Setting
      */
 
@@ -41,7 +41,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     /**
      * Insert new setting
-     * 
+     *
      * @return Surya\Setting\Model\Setting
      */
 
@@ -52,7 +52,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     /**
      * Get setting object from database
-     * 
+     *
      * @param string $group
      * @param string $name
      * @return Surya\Setting\Model\Setting
@@ -69,7 +69,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     /**
      * Get setting value from database
-     * 
+     *
      * @param string $group
      * @param string $name
      * @return mix
@@ -78,15 +78,12 @@ class EloquentSettingRepository implements SettingRepository {
     public function get(string $group, string $name)
     {
         $setting = $this->getSetting($group, $name);
-        if (setting($group . '.' . $name . '.type') == 'check') {
-            return ($setting) ? explode(',', $setting->value) : setting($group . '.' . $name . '.' . 'default');
-        }
-        return ($setting) ? $setting->value : setting($group . '.' . $name . '.' . 'default');
+        return ($setting) ? $setting->value : null;
     }
 
     /**
      * Get settings value based on given group from database
-     * 
+     *
      * @param string $group
      * @param array $cols
      * @return Illuminate\Support\Collection
@@ -99,7 +96,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     /**
      * Save settings
-     * 
+     *
      * @param array $data
      * @return void
      */
@@ -113,7 +110,7 @@ class EloquentSettingRepository implements SettingRepository {
                 'group' => $data['group'],
                 'name' => $data['name'][$i]
             ]);
-            
+
             if (isset($data[$data['name'][$i]])) {
 
                 if ($data[$data['name'][$i]] instanceof \Illuminate\Http\UploadedFile) {
@@ -151,7 +148,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     /**
      * Check if setting exists
-     * 
+     *
      * @param string $group
      * @param string $name
      * @return boolean
@@ -166,7 +163,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     /**
      * Handle file upload for file
-     * 
+     *
      * @param Illuminate\Http\UploadedFile $file
      * @return string
      */

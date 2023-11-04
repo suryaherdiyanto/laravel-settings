@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\View;
 use Surya\Setting\Exceptions\SettingLabelNotSpecifiedException;
 use Surya\Setting\Exceptions\SettingTypeNotFoundException;
 
+use function Orchestra\Testbench\workbench_path;
+
 class SettingUtil
 {
     private $resourcePath;
 
     public function __construct()
     {
-        $this->resourcePath = resource_path('settings');
+        $this->resourcePath = workbench_path('resources/settings');
     }
 
     public function readFile(string $filename): array
@@ -39,9 +41,6 @@ class SettingUtil
 
     private function throwsIfLabelNotSpecified(string|null $label = null)
     {
-        if (!isset($type)) {
-            throw new SettingLabelNotSpecifiedException("Show Label not specified", 1);
-        }
     }
 
     public function renderFromFile(string $filename)
@@ -49,8 +48,11 @@ class SettingUtil
         $data = $this->readFile($filename);
         $view = '';
 
+        $i = 0;
         foreach ($data as $group => $value) {
+            $value['i'] = $i;
             $view .= $this->renderSetting($value, str_replace('.php', '', $filename), $group);
+            $i += 1;
         }
 
         return $view;
@@ -62,7 +64,7 @@ class SettingUtil
         $data['group'] = $group;
         $this->throwsIfViewDoesntExists($data['type']);
 
-        $data['value'] = app('setting')->get("{$group}.{$name}");
+        $data['value'] = app(SettingService::class)->get("{$group}.{$name}");
 
         if (isset($data['source'])) {
 
@@ -70,11 +72,13 @@ class SettingUtil
 
             $source = app($data['source']);
 
-            $value = $data['key'] ?: 'id';
+            $value = $data['key'] ?? 'id';
 
-            $this->throwsIfLabelNotSpecified($data['label']);
+            if (!isset($data['show_label'])) {
+                throw new SettingLabelNotSpecifiedException("Show Label not specified", 1);
+            }
+
             $dataSource = $source->select([$value, $data['show_label']])->orderBy($value)->get();
-            unset($source);
 
             if (isset($dataSource)) {
                 $sourceCount = $dataSource->count();

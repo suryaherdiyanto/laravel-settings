@@ -44,7 +44,7 @@ class SettingService
     public function get(string $key)
     {
         $keys = explode('.', $key);
-        return $this->setting->get($keys[0], $keys[1]);
+        return $this->setting->get($keys[0], $keys[1]) ?: app(SettingUtil::class)->getSettingProp($key.'.default');
     }
 
     /**

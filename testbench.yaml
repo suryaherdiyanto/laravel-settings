@@ -16,7 +16,10 @@ workbench:
     web: true
     api: false
     commands: false
-    views: false
-  build: []
+    views: true
+  build:
+    - asset-publish
+    - create-sqlite-db
+    - migrate:refresh
   assets: []
   sync: []
