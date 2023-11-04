@@ -44,6 +44,18 @@ class SettingUtil
         }
     }
 
+    public function renderFromFile(string $filename)
+    {
+        $data = $this->readFile($filename);
+        $view = '';
+
+        foreach ($data as $group => $value) {
+            $view .= $this->renderSetting($value, str_replace('.php', '', $filename), $group);
+        }
+
+        return $view;
+    }
+
     public function renderSetting(array $data, string $group, string $name)
     {
         $data['name'] = $name;
