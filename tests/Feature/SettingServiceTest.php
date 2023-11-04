@@ -20,4 +20,10 @@ class SettingServiceTest extends TestCase
         $this->seed(SettingSeeder::class);
         $this->assertTrue(app(SettingService::class)->exists('general', 'test'));
     }
+
+    public function test_get_setting_and_return_the_value()
+    {
+        $this->seed(SettingSeeder::class);
+        $this->assertEquals('1', app(SettingService::class)->get('general.test'));
+    }
 }

@@ -39,10 +39,6 @@ class SettingUtil
         }
     }
 
-    private function throwsIfLabelNotSpecified(string|null $label = null)
-    {
-    }
-
     public function renderFromFile(string $filename)
     {
         $data = $this->readFile($filename);
