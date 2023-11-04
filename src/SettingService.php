@@ -7,12 +7,10 @@ use Surya\Setting\Repositories\SettingRepository;
 class SettingService
 {
     private $setting;
-    private $settingUtil;
 
-    public function __construct(SettingRepository $setting, SettingUtil $util)
+    public function __construct(SettingRepository $setting)
     {
         $this->setting = $setting;
-        $this->settingUtil = $util;
     }
 
     /**
@@ -47,16 +45,6 @@ class SettingService
     {
         $keys = explode('.', $key);
         return $this->setting->get($keys[0], $keys[1]);
-    }
-
-    /**
-     * Get setting root path
-     *
-     * @return string
-     */
-    public function getSettingPath(): string
-    {
-        return $this->setting_path;
     }
 
     /**
