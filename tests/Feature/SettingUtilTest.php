@@ -3,6 +3,7 @@
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 use Surya\Setting\Exceptions\SettingTypeNotFoundException;
+use Surya\Setting\SettingService;
 use Surya\Setting\SettingUtil;
 
 class SettingUtilTest extends TestCase
@@ -36,7 +37,7 @@ class SettingUtilTest extends TestCase
 
     public function test_render_setting_with_correct_view()
     {
-        $this->mock('setting')
+        $this->mock(SettingService::class)
             ->shouldReceive('get')->once()->andReturn('default');
         $this->assertStringContainsString('type="text"', app(SettingUtil::class)->renderSetting([
             'type' => 'text',
