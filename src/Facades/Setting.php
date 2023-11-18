@@ -3,6 +3,7 @@
 namespace Surya\Setting\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Surya\Setting\SettingService;
 
 class Setting extends Facade
 {
@@ -14,7 +15,7 @@ class Setting extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'setting';
+        return SettingService::class;
     }
 
 }
